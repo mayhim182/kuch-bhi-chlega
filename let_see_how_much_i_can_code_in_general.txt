@@ -1,0 +1,53 @@
+February 11 2024
+Q. https://www.geeksforgeeks.org/problems/remove-loop-in-linked-list/1?utm_source=geeksforgeeks&utm_medium=ml_article_practice_tab&utm_campaign=article_practice_tab
+
+    void removeLoop(Node* fast, Node* head){
+        Node* ptr = head;
+        while(head!=fast->next){
+            fast = fast->next;
+            head = head->next;
+        }
+        
+        fast->next = NULL;
+    }
+    
+    int detectLoop(Node *head){
+        if(!head || !head->next) return 0;
+        Node* slow = head;
+        Node* fast = head->next;
+        while(slow && fast && fast->next){
+            if(fast == slow) {
+                removeLoop(fast, head);
+                return 1;
+            }
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        return 0;
+    }
+    //Function to remove a loop in the linked list.
+    void removeLoop(Node* head)
+    {
+        detectLoop(head);
+    }
+
+Q. https://www.geeksforgeeks.org/problems/check-if-linked-list-is-pallindrome/1?utm_source=geeksforgeeks&utm_medium=ml_article_practice_tab&utm_campaign=article_practice_tab
+
+  int isPalindrome(string &s){
+        int l = 0;
+        int r = s.size()-1;
+        while(l<r){
+            if(s[l++]!=s[r--]) return 0;
+        }
+        return 1;
+    }
+    
+    bool isPalindrome(Node *head)
+    {
+     string s = "";
+     while(head){
+         s+=(head->data-'0');
+         head = head->next;
+     }
+     return isPalindrome(s);
+    }
