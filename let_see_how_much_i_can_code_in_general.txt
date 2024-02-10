@@ -51,3 +51,190 @@ Q. https://www.geeksforgeeks.org/problems/check-if-linked-list-is-pallindrome/1?
      }
      return isPalindrome(s);
     }
+
+Q. middle node
+https://www.geeksforgeeks.org/problems/finding-middle-element-in-a-linked-list/1?utm_source=geeksforgeeks&utm_medium=ml_article_practice_tab&utm_campaign=article_practice_tab
+
+int getMiddle(Node *head)
+    {
+        if(!head->next) return head->data;
+         //in case of single node middle bhi wahi
+        Node* slow = head;
+        Node* fast = head;
+        while(fast && fast->next){
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        return slow->data;
+    }
+
+Q. 
+https://www.geeksforgeeks.org/problems/remove-loop-in-linked-list/1?utm_source=geeksforgeeks&utm_medium=ml_article_practice_tab&utm_campaign=article_practice_tab
+
+void removeLoop(Node* head,Node* fast){
+        while(fast->next!=head){
+            head = head->next;
+            fast = fast->next;
+        }
+        fast ->next = NULL;
+    }
+    
+    void detectLoop(Node* ptr){
+        
+        if(!ptr || !ptr->next) return ;
+        
+        Node* slow = ptr;
+        Node* fast = ptr->next;
+        
+        while(slow && fast && fast->next){
+            if(slow==fast){
+                removeLoop(ptr,fast);
+                return ;
+            }
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+    }
+    
+    //Function to remove a loop in the linked list.
+    void removeLoop(Node* head)
+    {
+        detectLoop(head);
+    }
+
+Q. Find beginning of loop
+
+class Solution
+{
+    public:
+    Node* detectLoop(Node* ptr){
+    
+    if(!ptr || !ptr->next) return 0;
+    
+    Node* slow = ptr;
+    Node* fast = ptr->next;
+    while(slow && fast && fast->next){
+        if(slow==fast) return slow;
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return NULL; 
+}
+     //Function to find first node if the linked list has a loop.
+    int findFirstNode(Node* head)
+    {
+        if(!head || !head->next) return -1; //assuming no self loop 
+        Node* ptr = head;
+        Node* matchFound = detectLoop(ptr);
+        if(!matchFound) return -1; //No match
+        matchFound = matchFound->next;
+       
+        while(head && matchFound && head!=matchFound){
+            head = head->next;
+            matchFound = matchFound->next;
+        }
+        return matchFound->data;
+    }
+};
+
+Q. Circular or not
+https://www.geeksforgeeks.org/problems/circular-linked-list/1?utm_source=geeksforgeeks&utm_medium=ml_article_practice_tab&utm_campaign=article_practice_tab
+
+Node* detectLoop(Node* ptr){
+    
+    if(!ptr || !ptr->next) return 0;
+    
+    Node* slow = ptr;
+    Node* fast = ptr->next;
+    while(slow && fast && fast->next){
+        if(slow==fast) return slow;
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return NULL; 
+}
+
+bool isCircular(Node *head)
+{
+//   if(!head) return 0;
+//   Node* ptr = head;
+//   ptr = head->next;
+//   while(ptr){
+//       if(ptr == head) return 1;
+//       ptr = ptr->next;
+//   }
+//   return 0;//Otherwise no loop or cycle
+
+//Alternate approach
+ if(!head) return 0;
+    Node* ptr = head;
+    Node* match = detectLoop(ptr);
+if(!match) return 0;
+    match = match->next;
+    while(head && match && match != head){
+        head = head->next;
+        match = match->next;
+    }
+return head==match;
+}
+
+bool isCircular(Node *head)
+{
+   if(!head) return 0;
+   Node* ptr = head;
+   ptr = head->next;
+   while(ptr){
+       if(ptr == head) return 1;
+       ptr = ptr->next;
+   }
+   return 0;//Otherwise no loop or cycle
+}
+
+
+Q. https://www.geeksforgeeks.org/problems/find-length-of-loop/1?utm_source=geeksforgeeks&utm_medium=ml_article_practice_tab&utm_campaign=article_practice_tab
+
+Node* detectLoop(Node* ptr){
+    
+    if(!ptr || !ptr->next) return 0;
+    
+    Node* slow = ptr;
+    Node* fast = ptr->next;
+    while(slow && fast && fast->next){
+        if(slow==fast) return slow;
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return NULL; 
+}
+
+int countNodesinLoop(struct Node *head)
+{
+   Node* ptr = head;
+   Node* match = detectLoop(ptr);
+   if(!match) return 0;  //Loop of length 0;
+   Node* matchCopy = match;
+   matchCopy = matchCopy->next;
+   int count = 1;
+   while(matchCopy!=match){
+       matchCopy = matchCopy->next;
+       count++;
+   }
+   return count;
+}
+
+Q. https://www.geeksforgeeks.org/problems/detect-loop-in-linked-list/1?utm_source=geeksforgeeks&utm_medium=article_practice_tab&utm_campaign=article_practice_tab
+
+bool detectLoop(Node* head)
+    {
+        if(!head || !head->next) return false;
+        
+        Node* slow = head;
+        Node* fast = head->next;
+        while(slow && fast && fast->next){
+            if(fast == slow) return 1;
+            slow = slow -> next;
+            fast = fast ->next ->next;
+        }
+        
+        return 0;
+    }
