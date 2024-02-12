@@ -238,3 +238,93 @@ bool detectLoop(Node* head)
         
         return 0;
     }
+
+Q. https://www.geeksforgeeks.org/problems/recamans-sequence4856/1
+    vector<int> recamanSequence(int n){
+        //BRUTE FORCE
+        unordered_map<int,int> mp;
+        vector<int> ans;
+        int l = 0;
+        int a = 0;
+    
+        while(l<n){
+            int temp = a - l;
+            if(temp>0 && mp.find(temp)==mp.end()){
+                mp[temp]++;
+                ans.push_back(temp);
+            }
+            else{
+                temp = a+l;
+                mp[temp]++; //avoiding an extra if block by using space
+                ans.push_back(temp);
+            }
+            a = temp;
+            l++;
+        }
+        
+        return ans;
+    }
+
+Q.https://www.geeksforgeeks.org/problems/recursive-sequence1611/1
+    const long long mod = 1e9+7;
+    
+    long long sequence(int n){
+        // BRUTE FORCE
+        long long ans = 0;int multiplier = 1;
+        for(int i=1;i<=n;i++){
+          int temp=i;
+          long long tempSum = 1;
+          while(temp--){
+              tempSum = (tempSum*multiplier)%mod;
+              multiplier++;
+          }
+          ans = (ans%mod+tempSum%mod)%mod;
+        }
+        
+        return ans;
+    }
+
+Q. https://www.geeksforgeeks.org/problems/linked-list-insertion-1587115620/0
+
+
+    Node *insertAtBegining(Node *head, int x) {
+       // Your code here
+       Node* temp = new Node(x);
+       if(!head) return temp;
+       temp->next = head;
+       head = temp;
+       return head;
+    }
+    
+    
+    //Function to insert a node at the end of the linked list.
+    Node *insertAtEnd(Node *head, int x)  {
+       if(!head) return new Node(x);
+       Node* ptr = head;
+       while(head->next){
+           head = head->next;
+       }
+       Node* temp = new Node(x);//create a node with data
+       head->next = temp;
+       return ptr;
+    }
+
+Q.https://www.geeksforgeeks.org/problems/delete-a-node-in-single-linked-list/1?page=1&category=Linked%20List&sortBy=submissions
+
+
+Node* deleteNode(Node *head,int x)
+{
+    Node* ptr = head;
+    if(!head) return head;
+    if(x==1){
+        ptr = ptr->next;
+    }
+    while(x>2 && head){
+        head = head->next;
+        x--;
+    }
+    if(head && head->next){
+        head->next = head->next->next;
+    }
+    return ptr;
+}
