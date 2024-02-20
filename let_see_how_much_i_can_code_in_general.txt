@@ -363,3 +363,25 @@ Q. https://www.geeksforgeeks.org/problems/game-with-string4100/1
         return ans;
             
     }
+
+Q. Word break Naive [ACCEPTED]
+   int helpInBreaking(unordered_map<string, int> &mp,string &A,string temp,int &len, int currIndex){
+        if(currIndex>=len && temp.length()==0) return 1;
+        if(currIndex>=len) return 0;
+        temp+=A[currIndex];
+        if(mp.find(temp)!=mp.end()){
+            return helpInBreaking(mp,A,"",len,currIndex+1) || helpInBreaking(mp,A,temp,len,currIndex+1);
+        }
+        
+        return helpInBreaking(mp,A,temp,len,currIndex+1);
+    }
+
+    int wordBreak(string A, vector<string> &B) {
+        unordered_map<string, int> mp; 
+        for(auto x:B){ 
+            mp[x]++; //Aux space O(B.length())
+        }
+        
+        int len = A.length();
+        return helpInBreaking(mp,A,"",len,0);
+    }
